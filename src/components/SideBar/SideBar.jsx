@@ -14,6 +14,7 @@ import {
   ListItemText,
   Typography,
   GlobalStyles,
+  Button,
 } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
@@ -39,8 +40,6 @@ export default function Sidebar() {
         return 'dashboard';
       case '/messages':
         return 'messages';
-      case '/tasks':
-        return 'tasks';
       case '/users':
         return 'users';
       case '/support':
@@ -152,14 +151,6 @@ export default function Sidebar() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton href="/tasks" selected={selectedItem === 'tasks'}>
-              <ListItemIcon>
-                <AssignmentRoundedIcon />
-              </ListItemIcon>
-              <ListItemText primary='Tasks' />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
             <ListItemButton component='a' href='/messages'>
               <ListItemIcon>
                 <QuestionAnswerRoundedIcon />
@@ -191,20 +182,22 @@ export default function Sidebar() {
       <Divider />
       <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
         <Avatar
-          src={dataUser.avatar}
+          src={dataUser?.avatar}
           sx={{ border: "1px solid", width: 32, height: 32 }}
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
           <Typography variant='subtitle2' fontWeight='bold'>
-            {dataUser.name}
+            {dataUser ? dataUser.name : "Username"}
           </Typography>
           <Typography variant='caption' color='text.secondary'>
-            {dataUser.email}
+            {dataUser ? dataUser.email : "Email"}
           </Typography>
         </Box>
-        <IconButton size='small' color='default' onClick={() => handleLogout()}>
-          <LogoutRoundedIcon />
-        </IconButton>
+        {
+          dataUser ? <IconButton size='small' color='default' onClick={() => handleLogout()}>
+            <LogoutRoundedIcon />
+          </IconButton> : <Button variant='outlined' size="small" color='primary' href='/signin'>Sign in</Button>
+        }
       </Box>
     </Box>
   );
